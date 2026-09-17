@@ -11,21 +11,15 @@ from pages.home_page import HomePage
 from pages.products_page import ProductsPage
 from pages.cart_page import CartPage
 
-from utils.csv_handler import read_csv,create_csv
-
-
-# Get project root
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-VALID_LOGIN_FILE = BASE_DIR / "test_data" / "valid_login.csv"
-INVALID_LOGIN_FILE = BASE_DIR / "test_data" / "invalid_login.csv"
-PRODUCT_FILE = BASE_DIR / "test_data" / "products.csv"
+from utils.csv_handler import read_csv
+from secret_manager.password.decryption import decrypt_password
+from config.constant import VALID_LOGIN_FILE,INVALID_LOGIN_FILE,PRODUCTS_FILE,BASE_URL
 
 
 # Read CSV data
 valid_login_data = read_csv(VALID_LOGIN_FILE)
 invalid_login_data = read_csv(INVALID_LOGIN_FILE)
-product_data = read_csv(PRODUCT_FILE)
+product_data = read_csv(PRODUCTS_FILE)
 
 
 @pytest.mark.parametrize("data", invalid_login_data)
@@ -54,7 +48,8 @@ def test_valid_login(page: Page, data):
 
     login_page.login_with_credentials(
         data["email"],
-        data["password"]
+        decrypt_password(data["password"])
+
     )
 
     expect(
@@ -62,16 +57,15 @@ def test_valid_login(page: Page, data):
     ).to_be_visible()
 
 
-@pytest.mark.parametrize("data", valid_login_data)
-def test_login(shared_page: Page, data):
+def test_login(shared_page: Page):
 
     shared_page.goto("https://automationexercise.com/")
 
     login_page = LoginPage(shared_page)
-
+    data = valid_login_data[0]
     login_page.login_with_credentials(
-        "sahil9068@gmail.com",
-        "Sahil@123"
+        data["email"],
+        decrypt_password(data["password"])
     )
 
     expect(
