@@ -25,7 +25,7 @@ product_data = read_csv(PRODUCTS_FILE)
 @pytest.mark.parametrize("data", invalid_login_data)
 def test_invalid_login(page: Page, data):
 
-    page.goto("https://automationexercise.com/")
+    page.goto(BASE_URL)
 
     login_page = LoginPage(page)
 
@@ -42,7 +42,7 @@ def test_invalid_login(page: Page, data):
 @pytest.mark.parametrize("data", valid_login_data)
 def test_valid_login(page: Page, data):
 
-    page.goto("https://automationexercise.com/")
+    page.goto(BASE_URL)
 
     login_page = LoginPage(page)
 
@@ -59,7 +59,7 @@ def test_valid_login(page: Page, data):
 
 def test_login(shared_page: Page):
 
-    shared_page.goto("https://automationexercise.com/")
+    shared_page.goto(BASE_URL)
 
     login_page = LoginPage(shared_page)
     data = valid_login_data[0]
@@ -117,7 +117,7 @@ def test_item_in_cart(
 
 def test_logout(page):
 
-    page.goto("https://automationexercise.com/")
+    page.goto(BASE_URL)
 
     login_page = LoginPage(page)
 
