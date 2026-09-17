@@ -1,0 +1,4 @@
+name,email,subject,message,file_path
+Sahil,sahil128@example.com,Automation Testing,This is a test message.,D:\WatchGuard\playwright_opencart_project\test_data\test.txt
+Rahul,rahul2@example.com,Contact Support,This is another test message.,D:\WatchGuard\playwright_opencart_project\test_data\test.txt
+Komal,komal3@example.com,Testing Contact Form,Testing file upload functionality.,D:\WatchGuard\playwright_opencart_project\test_data\test.txt
